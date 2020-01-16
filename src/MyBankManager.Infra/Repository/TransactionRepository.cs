@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyBankManager.Domain.Entities;
@@ -21,6 +22,7 @@ namespace MyBankManager.Infra.Repository
 
         public async Task Add(Transaction Transaction) => await _context.AddAsync(Transaction);
 
-
+        public async Task<IEnumerable<Transaction>> GetByAccountId(Guid id) =>
+            await _context.Transactions.Where(p => p.AccountFromId == id).ToListAsync();
     }
 }

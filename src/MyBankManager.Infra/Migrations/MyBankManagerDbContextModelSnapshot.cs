@@ -41,7 +41,10 @@ namespace MyBankManager.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AccountId")
+                    b.Property<Guid>("AccountFromId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AccountToId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Amount")
@@ -54,9 +57,14 @@ namespace MyBankManager.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TypeTransaction")
+                        .HasColumnType("int");
+
                     b.HasKey("TransactionId");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("AccountFromId");
+
+                    b.HasIndex("AccountToId");
 
                     b.HasIndex("TransactionId");
 
@@ -65,7 +73,7 @@ namespace MyBankManager.Infra.Migrations
 
             modelBuilder.Entity("MyBankManager.Domain.Entities.Account", b =>
                 {
-                    b.OwnsOne("MyBankManager.Domain.ValueObjects.User", "User", b1 =>
+                    b.OwnsOne("MyBankManager.Domain.ValueObjects.Client", "Client", b1 =>
                         {
                             b1.Property<Guid>("AccountId")
                                 .HasColumnType("uniqueidentifier");
@@ -93,10 +101,16 @@ namespace MyBankManager.Infra.Migrations
 
             modelBuilder.Entity("MyBankManager.Domain.Entities.Transaction", b =>
                 {
-                    b.HasOne("MyBankManager.Domain.Entities.Account", "Account")
-                        .WithMany("Transactions")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("MyBankManager.Domain.Entities.Account", "AccountFrom")
+                        .WithMany("TransactionsAccountFrom")
+                        .HasForeignKey("AccountFromId")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.HasOne("MyBankManager.Domain.Entities.Account", "AccountTo")
+                        .WithMany("TransactionsAccountTo")
+                        .HasForeignKey("AccountToId")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

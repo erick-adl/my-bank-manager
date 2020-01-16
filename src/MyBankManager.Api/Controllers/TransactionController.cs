@@ -24,6 +24,10 @@ namespace MyBankManager.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id) => this.ToActionResult(await _mediator.Send(new TransactionRequest { Id = id }));
 
+        // GET: api/Transaction/Account/5
+        [HttpGet("Account/{id}")]
+        public async Task<IActionResult> GetByAccountId(Guid id) => this.ToActionResult(await _mediator.Send(new TransactionAccountRequest { Id = id }));
+
         // POST: api/Transaction
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UpsertTransactionRequest request) => this.ToActionResult(await _mediator.Send(request));
@@ -32,7 +36,7 @@ namespace MyBankManager.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return this.ToActionResult(await _mediator.Send(new RemoveTransactionRequest { Id = id}));
+            return this.ToActionResult(await _mediator.Send(new RemoveTransactionRequest { Id = id }));
         }
 
         // PUT: api/Transaction/5

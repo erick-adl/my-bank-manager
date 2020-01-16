@@ -16,7 +16,23 @@ namespace MyBankManager.Infra
         {
             modelBuilder.ApplyConfiguration(new AccountConfig());
             modelBuilder.ApplyConfiguration(new TransactionConfig());
-            
+
+
+            modelBuilder.Entity<Transaction>()
+                   .HasOne(m => m.AccountFrom)
+                   .WithMany(t => t.TransactionsAccountFrom)
+                   .HasForeignKey(m => m.AccountFromId)
+                   .OnDelete(DeleteBehavior.ClientNoAction)
+                   .IsRequired();
+
+            modelBuilder.Entity<Transaction>()
+                   .HasOne(m => m.AccountTo)
+                   .WithMany(t => t.TransactionsAccountTo)
+                   .HasForeignKey(m => m.AccountToId)
+                   .OnDelete(DeleteBehavior.ClientNoAction)
+                   .IsRequired();
+
+
         }
     }
 }

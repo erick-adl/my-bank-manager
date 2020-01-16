@@ -3,10 +3,10 @@
 namespace MyBankManager.Domain.ValueObjects
 {
     [Owned]
-    public class User
+    public class Client
     {
-        public User() { }
-        public User(string name, string document)
+        public Client() { }
+        public Client(string name, string document)
         {
             Name = name;
             Document = document;

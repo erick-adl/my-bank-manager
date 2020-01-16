@@ -28,12 +28,19 @@ namespace MyBankManager.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UpsertAccountRequest request) => this.ToActionResult(await _mediator.Send(request));
 
+        // POST: api/Account
+        [Route("Deposit")]
+        [HttpPost]
+        public async Task<IActionResult> Deposit([FromBody] DepositOrWithdrawRequest request) => this.ToActionResult(await _mediator.Send(request));
+
+
+        [Route("Withdraw")]
+        [HttpPost]
+        public async Task<IActionResult> Withdraw([FromBody] DepositOrWithdrawRequest request) => this.ToActionResult(await _mediator.Send(request));
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            return this.ToActionResult(await _mediator.Send(new RemoveAccountRequest { Id = id}));
-        }
+        public async Task<IActionResult> Delete(Guid id) => this.ToActionResult(await _mediator.Send(new RemoveAccountRequest { Id = id }));
 
         // PUT: api/Account/5
         [HttpPut("{id}")]

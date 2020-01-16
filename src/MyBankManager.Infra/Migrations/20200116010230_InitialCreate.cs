@@ -26,7 +26,9 @@ namespace MyBankManager.Infra.Migrations
                 columns: table => new
                 {
                     TransactionId = table.Column<Guid>(nullable: false),
-                    AccountId = table.Column<Guid>(nullable: false),
+                    AccountFromId = table.Column<Guid>(nullable: false),
+                    AccountToId = table.Column<Guid>(nullable: false),
+                    TypeTransaction = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     Amount = table.Column<double>(nullable: false),
                     DateAndTime = table.Column<DateTime>(nullable: false)
@@ -35,11 +37,15 @@ namespace MyBankManager.Infra.Migrations
                 {
                     table.PrimaryKey("PK_Transactions", x => x.TransactionId);
                     table.ForeignKey(
-                        name: "FK_Transactions_Accounts_AccountId",
-                        column: x => x.AccountId,
+                        name: "FK_Transactions_Accounts_AccountFromId",
+                        column: x => x.AccountFromId,
                         principalTable: "Accounts",
-                        principalColumn: "AccountId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "AccountId");
+                    table.ForeignKey(
+                        name: "FK_Transactions_Accounts_AccountToId",
+                        column: x => x.AccountToId,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -48,9 +54,14 @@ namespace MyBankManager.Infra.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_AccountId",
+                name: "IX_Transactions_AccountFromId",
                 table: "Transactions",
-                column: "AccountId");
+                column: "AccountFromId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_AccountToId",
+                table: "Transactions",
+                column: "AccountToId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_TransactionId",

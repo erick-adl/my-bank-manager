@@ -10,8 +10,8 @@ namespace MyBankManager.Api.Mappings
         public AutoMapping()
         {
             CreateMap<Account, UpsertAccountRequest>().ReverseMap()
-                .ForPath(des => des.User.Name, sor => sor.MapFrom(x => x.Name))
-                .ForPath(des => des.User.Document, sor => sor.MapFrom(x => x.Document));
+                .ForPath(des => des.Client.Name, sor => sor.MapFrom(x => x.Name))
+                .ForPath(des => des.Client.Document, sor => sor.MapFrom(x => x.Document));
 
             CreateMap<Transaction, UpsertTransactionRequest>().ReverseMap();
 

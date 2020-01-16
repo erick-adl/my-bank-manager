@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MyBankManager.Domain.ValueObjects;
+using MyBankManager.Domain.ValueObjects.Enums;
 
 namespace MyBankManager.Domain.Entities
 {
@@ -9,21 +10,39 @@ namespace MyBankManager.Domain.Entities
     {
         protected Account()
         {
-            this.Transactions = new List<Transaction>();
         }
 
-        public Account(Guid accountId,  User user, double balance = 0)
+        public Account(Guid accountId, Client user, double balance = 0)
         {
             this.AccountId = accountId;
             this.Balance = balance;
-            this.User = user;
-            this.Transactions = new List<Transaction>();
+            this.Client = user;
 
         }
         public Guid AccountId { get; set; }
         public double Balance { get; set; }
-        public User User { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
+        public Client Client { get; set; }
+        public virtual ICollection<Transaction> TransactionsAccountFrom { get; set; }
+        public virtual ICollection<Transaction> TransactionsAccountTo { get; set; }
+
+        public bool DepositOrWithdraw(double value, TypeTransaction typeTransaction)
+        {
+            switch (typeTransaction)
+            {
+                case TypeTransaction.Deposit:
+                    Balance += value;
+                    return true;
+                case TypeTransaction.Withdraw:
+                    if ((Balance - value) > 0)
+                    {
+                        Balance -= value;
+                        return true;
+                    }
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
     }
 }

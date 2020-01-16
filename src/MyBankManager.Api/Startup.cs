@@ -12,6 +12,7 @@ using MyBankManager.Domain.Interfaces;
 using MyBankManager.Infra.Repository;
 using MyBankManager.Infra;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace MyBankManager.Api
 {
@@ -49,6 +50,12 @@ namespace MyBankManager.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Bank Manager Api", Version = "v1" });
+            });
+
+            services.AddMvc()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.IgnoreNullValues = true;
             });
         }
 
