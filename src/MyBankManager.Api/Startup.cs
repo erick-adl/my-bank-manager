@@ -35,11 +35,7 @@ namespace MyBankManager.Api
                 options.Level = CompressionLevel.Fastest;
             });
 
-            var connection = @"Server=db;Database=master;User=sa;Password=Your_password123;";
-            services.AddDbContext<MyBankManagerDbContext>(
-                    options => options.UseSqlServer(connection));
-                    
-            // services.AddDbContext<MyBankManagerDbContext>(FactoryDbContext);
+            services.AddDbContext<MyBankManagerDbContext>(FactoryDbContext);
 
             services.AddMemoryCache();
             services.AddMediatR(GetType().Assembly);
