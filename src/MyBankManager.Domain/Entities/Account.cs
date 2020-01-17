@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using MyBankManager.Domain.ValueObjects;
-using MyBankManager.Domain.ValueObjects.Enums;
+using MyBankManager.Domain.Models;
+using MyBankManager.Domain.Models.Enums;
 
 namespace MyBankManager.Domain.Entities
 {

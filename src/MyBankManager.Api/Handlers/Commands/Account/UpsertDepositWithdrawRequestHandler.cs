@@ -8,7 +8,7 @@ using MyBankManager.Infra;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MyBankManager.Domain.ValueObjects.Enums;
+using MyBankManager.Domain.Models.Enums;
 
 namespace MyBankManager.Api.Handlers.Commands
 {
@@ -45,17 +45,18 @@ namespace MyBankManager.Api.Handlers.Commands
             {
                 if (account.DepositOrWithdraw(request.Amount, request.typeTransaction))
                 {
-                    var t = new Transaction(
-                        account.AccountId,
-                        account,
-                        request.typeTransaction,
-                        request.typeTransaction.ToString(),
-                        request.Amount,
-                        DateTime.Now,
-                        account.AccountId,
-                        account);
+                    var transation = new Transaction.Builder()
+                    .FromAccountId(account.AccountId)
+                    .ToAccountId(account.AccountId)
+                    .WithTypeTransaction(request.typeTransaction)
+                    .WithAmount(request.Amount)
+                    .InTheTime(DateTime.Now)
+                    .Build();
 
-                    await _transactionRepository.Add(t);
+                    if (!transation.IsValid())
+                        return new NotFoundResult($"Invalid Transaction");
+
+                    await _transactionRepository.Add(transation);
                 }
                 else
                     return new NotFoundResult($"Invalid Transaction");

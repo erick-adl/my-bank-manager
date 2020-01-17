@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace MyBankManager.Domain.ValueObjects
+namespace MyBankManager.Domain.Models
 {
     [Owned]
     public class Client

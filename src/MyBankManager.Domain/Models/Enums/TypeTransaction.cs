@@ -1,4 +1,4 @@
-namespace MyBankManager.Domain.ValueObjects.Enums
+namespace MyBankManager.Domain.Models.Enums
 {
     public enum TypeTransaction
     {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MyBankManager.Domain.ValueObjects.Enums;
+using MyBankManager.Domain.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
